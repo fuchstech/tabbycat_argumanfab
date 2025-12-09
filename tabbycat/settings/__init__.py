@@ -21,6 +21,12 @@ base_settings = [
     'core.py',
 ]
 
+# Debug: Log Railway-related environment variables
+root.info(f'ENV CHECK: RAILWAY_ENVIRONMENT={os.environ.get("RAILWAY_ENVIRONMENT", "NOT SET")}')
+root.info(f'ENV CHECK: RAILWAY_PUBLIC_DOMAIN={os.environ.get("RAILWAY_PUBLIC_DOMAIN", "NOT SET")}')
+root.info(f'ENV CHECK: RAILWAY_STATIC_URL={os.environ.get("RAILWAY_STATIC_URL", "NOT SET")}')
+root.info(f'ENV CHECK: IN_DOCKER={os.environ.get("IN_DOCKER", "NOT SET")}')
+
 if os.environ.get('GITHUB_CI', '') and bool(os.environ['GITHUB_CI']):
     base_settings.append('github.py')
     root.info('SPLIT_SETTINGS: imported github.py')
