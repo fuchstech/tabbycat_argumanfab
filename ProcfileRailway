@@ -1,0 +1,5 @@
+# Railway Procfile
+# Runs both ASGI server and worker
+
+asgi: python ./tabbycat/run-asgi.py
+worker: python ./tabbycat/manage.py runworker notifications adjallocation venues

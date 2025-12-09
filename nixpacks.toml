@@ -1,12 +1,11 @@
 # Nixpacks configuration for Railway
-# This project requires both Python and Node.js
+# This project requires Python at runtime, Node.js only for build
 
 [providers]
 python = "3.11"
-node = "18"
 
 [phases.setup]
-nixPkgs = ["...", "postgresql"]
+nixPkgs = ["...", "postgresql", "nodejs_18"]
 
 [phases.install]
 dependsOn = ["setup"]
@@ -15,4 +14,4 @@ dependsOn = ["setup"]
 dependsOn = ["install"]
 
 [start]
-cmd = "npm run railway-serve"
+cmd = "honcho -f ProcfileRailway start"

@@ -5,7 +5,7 @@
     "buildCommand": "./bin/railway-compile.sh"
   },
   "deploy": {
-    "startCommand": "npm run railway-serve",
+    "startCommand": "honcho -f ProcfileRailway start",
     "restartPolicyType": "ON_FAILURE",
     "restartPolicyMaxRetries": 10
   }
