@@ -1,0 +1,21 @@
+# Nixpacks configuration for Railway
+# This project requires both Python and Node.js
+
+[phases.setup]
+nixPkgs = ["python311", "nodejs-18_x", "postgresql"]
+
+[phases.install]
+cmds = [
+    "python -m pip install pipenv",
+    "pipenv install --system",
+    "npm install"
+]
+
+[phases.build]
+cmds = [
+    "chmod +x ./bin/railway-compile.sh",
+    "./bin/railway-compile.sh"
+]
+
+[start]
+cmd = "npm run railway-serve"
