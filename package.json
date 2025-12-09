@@ -23,7 +23,7 @@
     "render-worker": "python manage.py runworker notifications adjallocation venues",
     "railway-serve": "npm-run-all -p railway-*",
     "railway-server": "python tabbycat/run-asgi.py",
-    "railway-worker": "python manage.py runworker notifications adjallocation venues",
+    "railway-worker": "python tabbycat/manage.py runworker notifications adjallocation venues",
     "docs": "sphinx-autobuild docs docs/_build/html --port 7999",
     "lint": "pre-commit run --all-files"
   },

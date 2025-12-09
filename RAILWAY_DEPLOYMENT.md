@@ -77,7 +77,7 @@ Background worker'lar için ayrı bir servis oluşturun:
 2. "Empty Service" seçin
 3. Aynı GitHub repository'sini seçin
 4. Settings'e gidin ve:
-   - **Custom Start Command**: `python manage.py runworker notifications adjallocation venues`
+   - **Custom Start Command**: `python tabbycat/manage.py runworker notifications adjallocation venues`
    - Aynı environment variable'ları ekleyin (yukarıdaki adım 4'teki gibi)
 
 ### Adım 6: Build ve Deploy Ayarları
