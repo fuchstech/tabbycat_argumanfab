@@ -33,6 +33,9 @@ elif os.environ.get('ON_HEROKU', ''):
 elif os.environ.get('ON_RENDER', ''):
     base_settings.append('render.py')
     root.info('SPLIT_SETTINGS: imported render.py')
+elif os.environ.get('RAILWAY_ENVIRONMENT', ''):
+    base_settings.append('railway.py')
+    root.info('SPLIT_SETTINGS: imported railway.py')
 else:
     base_settings.append('local.py')
     if os.environ.get('LOCAL_DEVELOPMENT', ''):
