@@ -53,12 +53,14 @@ if 'USING_NGINX' in os.environ and bool(int(os.environ['USING_NGINX'])):
         proxy_forwarded_proto_header="X-Forwarded-Proto",
     ).run()
 else:
-    root.info('TC_DEPLOY: Initialising Daphne with Host/Port')
+    # Use PORT environment variable (Railway, Render, etc.) or default to 8000
+    port = os.environ.get('PORT', '8000')
+    root.info(f'TC_DEPLOY: Initialising Daphne with Host/Port (port={port})')
     Server(
         application=asgi.application,
         endpoints=build_endpoint_description_strings(
             host="0.0.0.0",
-            port="8000",
+            port=port,
         ),
         ping_interval=15,
         ping_timeout=30,
