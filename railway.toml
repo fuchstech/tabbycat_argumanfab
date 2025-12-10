@@ -1,0 +1,10 @@
+# Railway Configuration for Tabbycat
+
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+startCommand = "./bin/docker-wait.sh --timeout=0 db:5432 -- ./bin/docker-run-honcho.sh"
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 10
