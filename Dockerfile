@@ -25,6 +25,7 @@ RUN git config --global url."https://".insteadOf git://
 # Install our node/python requirements
 RUN npm install -g npm@6.14.5
 RUN pip install -r ./config/requirements_docker.txt
+RUN pip install -r ./config/requirements_heroku.txt
 RUN npm install --only=production
 
 # Compile all the static files
