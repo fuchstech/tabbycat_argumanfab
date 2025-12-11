@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y \
     postgresql-client \
     && rm -rf /var/lib/apt/lists/*
 
-RUN curl -sL https://deb.nodesource.com/setup_18.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
 RUN apt-get update && apt-get install -y nodejs && rm -rf /var/lib/apt/lists/*
 
 # Copy all our files into the baseimage and cd to that directory
@@ -30,7 +30,7 @@ COPY package*.json ./
 RUN git config --global url."https://".insteadOf git://
 
 # Install our node/python requirements
-# Node.js 18 comes with npm 10.x which is compatible, no need to upgrade
+# Using Node.js 16 for compatibility with node-sass 5.x
 RUN pip install --no-cache-dir -r ./config/requirements_docker.txt
 RUN npm install --only=production
 
