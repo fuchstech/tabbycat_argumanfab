@@ -4,11 +4,48 @@
 # Dependencies
 node_modules/
 venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
 
 # Compilations
 tabbycat/staticfiles/
 docs/
+*.egg-info/
+dist/
+build/
 
 # Symlinks (they don't work on Windows)
 manage.py
 data/test/standard
+
+# Development files
+.git/
+.github/
+.gitignore
+.DS_Store
+*.log
+*.pot
+*.swp
+*~
+.vscode/
+.idea/
+
+# Testing
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+
+# Environment
+.env
+.env.local
+*.env
+
+# Documentation
+README.md
+docs/
+*.md

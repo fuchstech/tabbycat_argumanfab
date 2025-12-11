@@ -1,0 +1,98 @@
+name: tabbycat
+version: 1
+
+# PostgreSQL database service
+databases:
+  - name: tabbycat-db
+    type: postgres
+    version: "12"
+    storage: 10GB
+
+# Redis cache service
+services:
+  - name: tabbycat-redis
+    type: redis
+    version: "6"
+    memory: 256MB
+
+# Main application
+app:
+  name: tabbycat-web
+
+  # Build configuration
+  build:
+    dockerfile: Dockerfile
+    context: .
+
+  # Port configuration
+  port: 8000
+
+  # Environment variables
+  env:
+    - name: DEBUG
+      value: "0"
+    - name: IN_DOCKER
+      value: "1"
+    - name: DOCKER_REDIS
+      value: "1"
+    - name: DISABLE_SENTRY
+      value: "0"
+    - name: DATABASE_URL
+      from: database
+      database: tabbycat-db
+    - name: REDIS_URL
+      from: service
+      service: tabbycat-redis
+    - name: DJANGO_SECRET_KEY
+      generate: secret
+    - name: TIME_ZONE
+      value: "UTC"
+
+  # Health check
+  healthcheck:
+    path: /
+    interval: 30s
+    timeout: 10s
+    retries: 3
+
+  # Resource allocation
+  resources:
+    cpu: 1
+    memory: 1GB
+
+  # Scaling configuration
+  replicas: 1
+
+# Worker process for background tasks
+workers:
+  - name: tabbycat-worker
+    build:
+      dockerfile: Dockerfile
+      context: .
+    command: ["python", "manage.py", "runworker", "notifications", "adjallocation", "venues"]
+
+    env:
+      - name: DEBUG
+        value: "0"
+      - name: IN_DOCKER
+        value: "1"
+      - name: DOCKER_REDIS
+        value: "1"
+      - name: DISABLE_SENTRY
+        value: "0"
+      - name: DATABASE_URL
+        from: database
+        database: tabbycat-db
+      - name: REDIS_URL
+        from: service
+        service: tabbycat-redis
+      - name: DJANGO_SECRET_KEY
+        from: app
+        app: tabbycat-web
+        env: DJANGO_SECRET_KEY
+
+    resources:
+      cpu: 0.5
+      memory: 512MB
+
+    replicas: 1
