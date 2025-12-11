@@ -32,7 +32,16 @@ RUN git config --global url."https://".insteadOf git://
 # Install our node/python requirements
 # Using Node.js 16 for compatibility with node-sass 5.x
 RUN pip install --no-cache-dir -r ./config/requirements_docker.txt
-RUN npm install --only=production
+
+# Install build tools needed for node-sass
+RUN apt-get update && apt-get install -y \
+    python3 \
+    make \
+    g++ \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install node modules with binary for node-sass
+RUN npm install --only=production --unsafe-perm
 
 # Copy the rest of the application
 COPY . /tcd/
