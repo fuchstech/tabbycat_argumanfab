@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y \
     postgresql-client \
     && rm -rf /var/lib/apt/lists/*
 
-RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_18.x | bash -
 RUN apt-get update && apt-get install -y nodejs && rm -rf /var/lib/apt/lists/*
 
 # Copy all our files into the baseimage and cd to that directory
@@ -30,7 +30,7 @@ COPY package*.json ./
 RUN git config --global url."https://".insteadOf git://
 
 # Install our node/python requirements
-RUN npm install -g npm@6.14.5
+RUN npm install -g npm@latest
 RUN pip install --no-cache-dir -r ./config/requirements_docker.txt
 RUN npm install --only=production
 
