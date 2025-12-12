@@ -274,4 +274,4 @@ class ExportArchiveAllView(AdministratorMixin, TournamentMixin, View):
         return response
 
     def get_xml(self):
-        return ElementTree.tostring(Exporter(self.tournament).create_all())
+        return ElementTree.tostring(Exporter(self.tournament).create_all(), encoding='utf-8')
