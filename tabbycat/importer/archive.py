@@ -281,21 +281,23 @@ class Exporter:
             Q(id__in=self.t.team_set.all().values_list('institution_id')),
         ).select_related('region')
         for institution in institution_query:
-            institution_tag = SubElement(self.root, 'institution', {
-                'id': INST_PREFIX + str(institution.id),
-                'reference': institution.code,
-            })
+            inst_attrs = {'id': INST_PREFIX + str(institution.id)}
+            if institution.code:
+                inst_attrs['reference'] = institution.code
+
+            institution_tag = SubElement(self.root, 'institution', inst_attrs)
             institution_tag.text = institution.name
 
             if institution.region is not None:
                 institution_tag.set('region', institution.region.name)
 
     def add_motions(self):
-        for motion in Motion.objects.filter(round__tournament=self.t):
-            motion_tag = SubElement(self.root, 'motion', {
-                'id': MOTION_PREFIX + str(motion.id),
-                'reference': motion.reference,
-            })
+        for motion in Motion.objects.filter(rounds__tournament=self.t).distinct():
+            motion_attrs = {'id': MOTION_PREFIX + str(motion.id)}
+            if motion.reference:
+                motion_attrs['reference'] = motion.reference
+
+            motion_tag = SubElement(self.root, 'motion', motion_attrs)
 
             if motion.info_slide != '':
                 info_slide = SubElement(motion_tag, 'info-slide')
